@@ -43,6 +43,12 @@ def main():
             os.environ["RECHARGE_NOTIFY"] = str(options.get("RECHARGE_NOTIFY", "false")).lower()
             os.environ["BALANCE"] = str(options.get("BALANCE", 5.0))
             os.environ["PUSHPLUS_TOKEN"] = options.get("PUSHPLUS_TOKEN", "")
+            os.environ["MQTT_HOST"] = options.get("MQTT_HOST", "")
+            os.environ["MQTT_PORT"] = str(options.get("MQTT_PORT", 1883))
+            os.environ["MQTT_USER"] = options.get("MQTT_USER", "")
+            os.environ["MQTT_PASSWORD"] = options.get("MQTT_PASSWORD", "")
+            os.environ["MQTT_TOPIC_PREFIX"] = options.get("MQTT_TOPIC_PREFIX", "sgcc")
+            os.environ["ENABLE_HA_PUSH"] = str(options.get("ENABLE_HA_PUSH", "false")).lower()
             logging.info(f"当前以Homeassistant Add-on 形式运行.")
         except Exception as e:
             logging.error(f"Failing to read the options.json file, the program will exit with an error message: {e}.")

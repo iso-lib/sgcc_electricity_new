@@ -18,6 +18,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from sensor_updator import SensorUpdator
+from mqtt_publisher import MqttPublisher
 from error_watcher import ErrorWatcher
 
 from const import *
@@ -342,7 +343,21 @@ class DataFetcher:
                 else:
                     ### get data 
                     balance, last_daily_date, last_daily_usage, yearly_charge, yearly_usage, month_charge, month_usage  = self._get_all_data(driver, user_id, userid_index)
-                    updator.update_one_userid(user_id, balance, last_daily_date, last_daily_usage, yearly_charge, yearly_usage, month_charge, month_usage)
+                    if updator:
+                        updator.update_one_userid(user_id, balance, last_daily_date, last_daily_usage, yearly_charge, yearly_usage, month_charge, month_usage)
+
+                    # MQTT Publish
+                    mqtt_data = {
+                        "balance": balance,
+                        "last_daily_date": last_daily_date,
+                        "last_daily_usage": last_daily_usage,
+                        "yearly_charge": yearly_charge,
+                        "yearly_usage": yearly_usage,
+                        "month_charge": month_charge,
+                        "month_usage": month_usage,
+                        "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    }
+                    self.mqtt_publisher.publish(user_id, mqtt_data)
         
                     time.sleep(self.RETRY_WAIT_TIME_OFFSET_UNIT / 5)
             except Exception as e:
