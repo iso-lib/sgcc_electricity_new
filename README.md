@@ -128,6 +128,18 @@ HASS_URL="http://localhost:8123/"
 # homeassistant的长期令牌
 HASS_TOKEN="eyxxxxx"
 
+## MQTT 配置
+# MQTT Broker 地址
+MQTT_HOST=192.168.1.100
+# MQTT 端口
+MQTT_PORT=1883
+# MQTT 用户名 (可选)
+MQTT_USER=mqtt_user
+# MQTT 密码 (可选)
+MQTT_PASSWORD=mqtt_password
+# MQTT Topic 前缀
+MQTT_TOPIC_PREFIX=sgcc
+
 ## selenium运行参数
 # 任务开始时间，24小时制，例如"07:00”则为每天早上7点执行，第一次启动程序如果时间晚于早上7点则会立即执行一次，每隔12小时执行一次。
 JOB_START_TIME="07:00"
